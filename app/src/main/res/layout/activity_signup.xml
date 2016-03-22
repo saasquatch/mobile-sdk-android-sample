@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.referralsaasquatch.sampleapp.SignupActivity"
+    android:background="#f8f8f8">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".25" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign up for SaaS"
+        android:id="@+id/signup_textview_signup"
+        android:textAlignment="center"
+        android:textColor="#094f90"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_weight="0"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".25" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Hi, my name is"
+        android:id="@+id/signup_textview_namelabel"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:textSize="17sp"
+        android:textColor="#555555"
+        android:layout_weight="0"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_linearlayout_name"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_textfield_firstname"
+            android:layout_weight=".5"
+            android:hint="first" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_textfield_lastname"
+            android:layout_weight="0.5"
+            android:hint="last" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:id="@+id/signup_textview_emaillabel"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:textSize="17sp"
+        android:textColor="#555555"
+        android:layout_weight="0"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_textfield_email"
+        android:hint="email@example.com"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Password:"
+        android:id="@+id/signup_textview_passwordlabel"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:textSize="17sp"
+        android:textColor="#555555"
+        android:layout_weight="0"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_linearlayout_password"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_textview_password"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:hint="password"
+            android:password="false"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_textview_repeatpassword"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.5"
+            android:hint="repeat password"
+            android:password="false"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Referral Code:"
+        android:id="@+id/signup_textview_referrallabel"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:textSize="17sp"
+        android:textColor="#555555"
+        android:layout_weight="0"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup_textfield_referralcode"
+        android:hint="BOBTESTERSON"
+        android:gravity="center" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".25" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Sign me up!"
+        android:id="@+id/signup_button_signup"
+        android:layout_gravity="center_horizontal"
+        android:background="#0e6eb0"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:layout_weight="0"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="signup" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".25" />
+
+</LinearLayout>
