@@ -15,15 +15,15 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private User user = User.getInstance();
-    private String tenant = "SaaS";
+    private User mUser = User.getInstance();
+    private String mTenant = "SaaS";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
 
-    public void login(View loginButton) {
+    private void login(View loginButton) {
         EditText emailField = (EditText) findViewById(R.id.login_textfield_email);
         EditText passwordField = (EditText) findViewById(R.id.login_textfield_password);
         String emailValue = emailField.getText().toString();
@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             final String secret = "038tr0810t8h1028th108102085180";
 
             // Lookup Bob with Referral SaaSquatch
-            Saasquatch.getUser(tenant, userId, accountId, secret,
+            Saasquatch.getUser(mTenant, userId, accountId, secret,
                     new Saasquatch.FetchContextCompleteListener() {
                         @Override
                         public void onComplete(JSONObject context, String errorMessage, Integer errorCode) {
@@ -63,10 +63,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                             // Login Bob
-                            user.login(secret, userId, accountId, firstName, lastName, email, referralCode);
+                            mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode);
 
                             // Bob has an unclaimed reward for signing up with a Referral Code
-                            user.addReward("BOBTESTERSON", "$20 off your next SaaS");
+                            mUser.addReward("BOBTESTERSON", "$20 off your next SaaS");
 
                             // Head to welcome screen
                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void signup(View signupButton) {
+    private void signup(View signupButton) {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }

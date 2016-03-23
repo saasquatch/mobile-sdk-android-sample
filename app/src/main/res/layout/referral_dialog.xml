@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Awesome!"
+        android:id="@+id/reward_textview_title"
+        android:textAlignment="center"
+        android:textColor="#094f90"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_weight="0"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reward_imageview_bren"
+            android:src="@mipmap/bren"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You&apos;ve been referred by\nBob Testerson"
+            android:id="@+id/reward_textview_referred"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:layout_weight="0"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="REWARD:"
+        android:id="@+id/reward_textview_reward"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="bottom"
+        android:textSize="18sp"
+        android:textColor="#555555"
+        android:layout_weight="0"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="10% off your SaaS"
+        android:id="@+id/reward_textview_rewardstring"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:textColor="#0e6eb0"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp" />
+</LinearLayout>

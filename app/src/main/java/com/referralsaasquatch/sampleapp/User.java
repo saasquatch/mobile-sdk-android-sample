@@ -7,14 +7,14 @@ import java.util.LinkedList;
  */
 public class User {
     private static User mInstance = new User();
-    private String mSecret;
-    private String mId;
-    private String mAccountId;
-    private String mFirstName;
-    private String mLastName;
-    private String mEmail;
-    private String mReferralCode;
-    private LinkedList<Reward> mRewards;
+    public String secret;
+    public String userId;
+    public String accountId;
+    public String firstName;
+    public String lastName;
+    public String email;
+    public String referralCode;
+    public LinkedList<Reward> rewards;
 
     public static User getInstance() {
         return mInstance;
@@ -29,27 +29,27 @@ public class User {
                       String lastName,
                       String email,
                       String referralCode) {
-        mSecret = secret;
-        mId = id;
-        mAccountId = accountId;
-        mFirstName = firstName;
-        mLastName = lastName;
-        mEmail = email;
-        mReferralCode = referralCode;
-        mRewards = new LinkedList<>();
+        secret = secret;
+        userId = id;
+        accountId = accountId;
+        firstName = firstName;
+        lastName = lastName;
+        email = email;
+        referralCode = referralCode;
+        rewards = new LinkedList<>();
     }
 
     public void addReward(String code, String reward) {
-        mRewards.add(new Reward(code, reward));
+        rewards.add(new Reward(code, reward));
     }
 
-    private class Reward {
-        private String mCode;
-        private String mReward;
+    public class Reward {
+        public String code;
+        public String reward;
 
         public Reward(String code, String reward) {
-            mCode = code;
-            mReward = reward;
+            code = code;
+            reward = reward;
         }
     }
 }

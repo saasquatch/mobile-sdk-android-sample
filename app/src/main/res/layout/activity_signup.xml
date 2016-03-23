@@ -116,7 +116,7 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/signup_textview_password"
+            android:id="@+id/signup_textfield_password"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:hint="password"
@@ -126,7 +126,7 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/signup_textview_repeatpassword"
+            android:id="@+id/signup_textfield_repeatpassword"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:hint="repeat password"
