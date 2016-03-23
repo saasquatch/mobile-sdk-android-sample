@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         String emailValue = emailField.getText().toString();
         String passwordValue = passwordField.getText().toString();
 
-        if (emailValue == "demo" && passwordValue == "demo") {
+        if (emailValue.equals("demo") && passwordValue.equals("demo")) {
 
             // Get Bob's info
             final String userId = "123456";
