@@ -1,8 +1,10 @@
 package com.referralsaasquatch.sampleapp;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
 
                             if (errorMessage != null) {
                                 // Show an alert describing the error
+                                new AlertDialog.Builder(LoginActivity.this)
+                                        .setTitle("Login Error")
+                                        .setMessage(errorMessage)
+                                        .setPositiveButton("OK", null)
+                                        .show();
                                 return;
                             }
 
@@ -73,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+        } else {
+            Intent intent = new Intent(this, SignupActivity.class);
+            startActivity(intent);
         }
     }
 

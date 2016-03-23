@@ -29,8 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/reward_imageview_bren"
             android:src="@mipmap/bren"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:layout_width="match_parent"

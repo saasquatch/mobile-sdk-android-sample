@@ -20,7 +20,7 @@ import org.json.JSONObject;
 public class SignupActivity extends AppCompatActivity {
 
     private User mUser = User.getInstance();
-    private String mTenant;
+    private String mTenant = "SaaS";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,7 +243,8 @@ public class SignupActivity extends AppCompatActivity {
     private void showReferralDialog(String firstName, String lastName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater = this.getLayoutInflater();
-        Dialog dialog = builder.setView(layoutInflater.inflate(R.layout.referral_dialog, null))
+        View dialogView = layoutInflater.inflate(R.layout.referral_dialog, null);
+        Dialog dialog = builder.setView(dialogView)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -253,9 +254,10 @@ public class SignupActivity extends AppCompatActivity {
                 })
                 .create();
 
-        TextView referred = (TextView) findViewById(R.id.reward_textview_referred);
-        TextView rewardString = (TextView) findViewById(R.id.reward_textview_rewardstring);
-        referred.setText("You've been referred by\n" + firstName + " " + lastName);
+        TextView referred = (TextView) dialogView.findViewById(R.id.reward_textview_referred);
+        TextView rewardString = (TextView) dialogView.findViewById(R.id.reward_textview_rewardstring);
+        String referredString = "You've been referred by\n" + firstName + " " + lastName;
+        referred.setText(referredString);
         rewardString.setText(mUser.rewards.peekFirst().reward);
 
         dialog.show();

@@ -29,13 +29,13 @@ public class User {
                       String lastName,
                       String email,
                       String referralCode) {
-        secret = secret;
-        userId = id;
-        accountId = accountId;
-        firstName = firstName;
-        lastName = lastName;
-        email = email;
-        referralCode = referralCode;
+        this.secret = secret;
+        this.userId = id;
+        this.accountId = accountId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.referralCode = referralCode;
         rewards = new LinkedList<>();
     }
 
@@ -48,8 +48,8 @@ public class User {
         public String reward;
 
         public Reward(String code, String reward) {
-            code = code;
-            reward = reward;
+            this.code = code;
+            this.reward = reward;
         }
     }
 }
