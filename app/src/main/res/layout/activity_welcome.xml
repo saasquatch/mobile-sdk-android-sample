@@ -76,7 +76,8 @@
             android:textColor="#ffffff"
             android:textSize="18sp"
             android:textAllCaps="false"
-            android:layout_weight="0" />
+            android:layout_weight="0"
+            android:onClick="claimReward" />
     </LinearLayout>
 
     <Space
