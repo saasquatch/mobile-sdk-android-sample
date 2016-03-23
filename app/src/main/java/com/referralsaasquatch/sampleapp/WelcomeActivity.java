@@ -38,7 +38,7 @@ public class WelcomeActivity extends Activity {
         }
     }
 
-    private void claimReward(View claimButton) {
+    public void claimReward(View claimButton) {
         final String referralCode = mReward.code;
 
         // Validate the code with Referral SaaSquatch

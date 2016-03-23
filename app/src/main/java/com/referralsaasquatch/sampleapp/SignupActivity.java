@@ -155,7 +155,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    public Boolean validateFields() {
+    private Boolean validateFields() {
         Boolean result = true;
 
         EditText firstName = (EditText) findViewById(R.id.signup_textfield_firstname);
@@ -200,7 +200,7 @@ public class SignupActivity extends AppCompatActivity {
         return result;
     }
 
-    public JSONObject createUser(String firstName, String lastName, String email) {
+    private JSONObject createUser(String firstName, String lastName, String email) {
         String userId = "000001";
         String accountId = "000001";
         String locale = "en_us";
