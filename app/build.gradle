@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.referralsaasquatch.sampleapp"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -29,8 +29,8 @@ allprojects {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile(name: 'app-release', ext: 'aar')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.0'
+    compile(name:'app-release', ext:'aar')
 }
