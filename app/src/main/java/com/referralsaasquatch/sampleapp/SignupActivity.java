@@ -1,5 +1,6 @@
 package com.referralsaasquatch.sampleapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -17,7 +18,7 @@ import com.wholepunk.saasquatch.Saasquatch;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends Activity {
 
     private User mUser = User.getInstance();
     private String mTenant = "SaaS";

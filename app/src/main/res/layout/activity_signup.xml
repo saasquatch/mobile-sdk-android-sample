@@ -60,14 +60,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/signup_textfield_firstname"
             android:layout_weight=".5"
-            android:hint="first" />
+            android:hint="first"
+            android:singleLine="true" />
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/signup_textfield_lastname"
             android:layout_weight="0.5"
-            android:hint="last" />
+            android:hint="last"
+            android:singleLine="true" />
 
     </LinearLayout>
 
@@ -153,7 +155,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/signup_textfield_referralcode"
         android:hint="BOBTESTERSON"
-        android:gravity="center" />
+        android:gravity="center"
+        android:singleLine="true" />
 
     <Space
         android:layout_width="match_parent"
