@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    private void login(View loginButton) {
+    public void login(View loginButton) {
         EditText emailField = (EditText) findViewById(R.id.login_textfield_email);
         EditText passwordField = (EditText) findViewById(R.id.login_textfield_password);
         String emailValue = emailField.getText().toString();
