@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,13 @@ import com.wholepunk.saasquatch.Saasquatch;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+import java.util.UUID;
+
 public class SignupActivity extends Activity {
 
     private User mUser = User.getInstance();
-    private String mTenant = "SaaS";
+    private String mTenant = "acunqvcfij2l4";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,16 +139,16 @@ public class SignupActivity extends Activity {
 
                                                         // Parse the userInfo
                                                         String referrerFirstName;
-                                                        String referrerLastName;
+                                                        String referrerLastInitial;
                                                         try {
                                                             referrerFirstName = userInfo.getString("firstName");
-                                                            referrerLastName = userInfo.getString("lastName");
+                                                            referrerLastInitial = userInfo.getString("lastInitial");
                                                         } catch (JSONException e) {
                                                             showRegistrationErrorAlert("Something went wrong with your referral code.");
                                                             return;
                                                         }
 
-                                                        showReferralDialog(referrerFirstName, referrerLastName);
+                                                        showReferralDialog(referrerFirstName, referrerLastInitial);
                                                     }
                                                 });
                                     }
@@ -202,11 +204,12 @@ public class SignupActivity extends Activity {
     }
 
     private JSONObject createUser(String firstName, String lastName, String email) {
-        String userId = "000001";
-        String accountId = "000001";
+        Random rand = new Random();
+        String userId = String.valueOf(rand.nextInt());
+        String accountId = String.valueOf(rand.nextInt());
         String locale = "en_us";
         String referralCode = firstName.toUpperCase() + lastName.toUpperCase();
-        String secret = "038tr0810t8h1028th108102085180";
+        String secret = UUID.randomUUID().toString().replaceAll("-", "");
 
         mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode);
 

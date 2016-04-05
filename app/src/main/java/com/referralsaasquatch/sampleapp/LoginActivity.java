@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.wholepunk.saasquatch.Saasquatch;
 
@@ -18,7 +15,7 @@ import org.json.JSONObject;
 public class LoginActivity extends Activity {
 
     private User mUser = User.getInstance();
-    private String mTenant = "SaaS";
+    private String mTenant = "acunqvcfij2l4";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +28,18 @@ public class LoginActivity extends Activity {
         String emailValue = emailField.getText().toString();
         String passwordValue = passwordField.getText().toString();
 
-        if (emailValue.equals("demo") && passwordValue.equals("demo")) {
+        if (emailValue.equals("bob") && passwordValue.equals("bob")) {
 
             // Get Bob's info
-            final String userId = "123456";
-            final String accountId = "123456";
+            final String userId = "876343";
+            final String accountId = "613611";
             final String secret = "038tr0810t8h1028th108102085180";
 
             // Lookup Bob with Referral SaaSquatch
             Saasquatch.getUser(mTenant, userId, accountId, secret,
                     new Saasquatch.FetchContextCompleteListener() {
                         @Override
-                        public void onComplete(JSONObject context, String errorMessage, Integer errorCode) {
+                        public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
                             if (errorMessage != null) {
                                 // Show an alert describing the error
@@ -60,10 +57,10 @@ public class LoginActivity extends Activity {
                             String lastName;
                             String referralCode;
                             try {
-                                email = context.getString("email");
-                                firstName = context.getString("firstName");
-                                lastName = context.getString("lastName");
-                                referralCode = context.getString("referralCode");
+                                email = userInfo.getString("email");
+                                firstName = userInfo.getString("firstName");
+                                lastName = userInfo.getString("lastName");
+                                referralCode = userInfo.getString("referralCode");
                             } catch (JSONException e) {
                                 // Show an alert describing the error
                                 return;
@@ -72,18 +69,85 @@ public class LoginActivity extends Activity {
                             // Login Bob
                             mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode);
 
-                            // Bob has an unclaimed reward for signing up with a Referral Code
-                            mUser.addReward("BOBTESTERSON", "$20 off your next SaaS");
+                            // Validate Bob's referral code and give him his reward
+                            Saasquatch.validateReferralCode(mTenant, referralCode, secret, new Saasquatch.FetchContextCompleteListener() {
+                                @Override
+                                public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
-                            // Head to welcome screen
-                            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                            startActivity(intent);
+                                    if (errorCode != null) {
+                                        if (errorCode.equals(401)) {
+                                            // The secret was not the same as registered
+                                            showRegistrationErrorAlert(errorMessage);
+                                        } else if (errorCode.equals(404)) {
+                                            // The referral code was not found
+                                            showRegistrationErrorAlert("Invalid referral code.\nPlease check your code and try again.");
+                                        } else {
+                                            showRegistrationErrorAlert(null);
+                                        }
+                                        return;
+                                    }
+
+                                    // Parse the returned info
+                                    String code;
+                                    String rewardString = "";
+                                    String type;
+                                    JSONObject reward;
+                                    try {
+                                        code = userInfo.getString("code");
+                                        reward = userInfo.getJSONObject("reward");
+                                        type = reward.getString("type");
+                                    } catch (JSONException e) {
+                                        showRegistrationErrorAlert("Something went wrong with your referral code.");
+                                        return;
+                                    }
+
+                                    // Parse the reward info
+                                    try {
+                                        if (type.equals("PCT_DISCOUNT")) {
+                                            Integer percent = reward.getInt("discountPercent");
+                                            rewardString = percent.toString() + "% off your next SaaS";
+                                        } else {
+                                            String unit = reward.getString("unit");
+
+                                            if (type.equals("FEATURE")) {
+                                                rewardString = "You get a " + unit;
+                                            } else { // type == "TIME_CREDIT or type == "CREDIT"
+                                                Integer credit = reward.getInt("credit");
+                                                rewardString = credit.toString() + " " + unit + " off your next SaaS";
+                                            }
+                                        }
+                                    } catch (JSONException e) {
+                                        showRegistrationErrorAlert("Something went wrong with your referral code.");
+                                        return;
+                                    }
+
+                                    // Give Bob his referral reward
+                                    mUser.addReward(code, rewardString);
+
+                                    // Head to welcome screen
+                                    Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     });
         } else {
             Intent intent = new Intent(this, SignupActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void showRegistrationErrorAlert(String message) {
+        String errorMessage = "Something went wrong with your login\n" + "Please check your details and try again.";
+        if (message != null) {
+            errorMessage = message;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle("Registration Error")
+                .setMessage(errorMessage)
+                .setPositiveButton("OK", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     public void signup(View signupButton) {

@@ -65,19 +65,6 @@
             android:textIsSelectable="false"
             android:textSize="17sp" />
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Claim it!"
-            android:id="@+id/welcome_textview_claimbutton"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="#0e6eb0"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:layout_weight="0"
-            android:onClick="claimReward" />
     </LinearLayout>
 
     <Space
