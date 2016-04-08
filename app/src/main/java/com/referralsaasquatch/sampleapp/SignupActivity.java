@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.wholepunk.saasquatch.Saasquatch;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
@@ -28,6 +30,19 @@ public class SignupActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        Intent intent = getIntent();
+        String referralCode = null;
+        if (intent != null) {
+            Uri uri = intent.getData();
+            if (uri != null) {
+                referralCode = uri.getQueryParameter("referralCode");
+            }
+        }
+        if (referralCode != null) {
+            EditText referralCodeField = (EditText) findViewById(R.id.signup_textfield_referralcode);
+            referralCodeField.setText(referralCode, TextView.BufferType.EDITABLE);
+        }
     }
 
     public void signup(View signupButton) {
@@ -60,9 +75,41 @@ public class SignupActivity extends Activity {
                             return;
                         }
 
+                        // Parse the returned information
+                        String shareLink;
+                        String facebookShareLink;
+                        String twitterShareLink;
+                        JSONObject shareLinksJSON;
+
+                        try {
+                            shareLinksJSON = userInfo.getJSONObject("shareLinks");
+                        } catch (JSONException e) {
+                            // Show an alert describing the error
+                            showRegistrationErrorAlert("Registration error.\nPlease try again.");
+                            return;
+                        }
+
+                        try {
+                            shareLink = shareLinksJSON.getString("shareLink");
+                            facebookShareLink = shareLinksJSON.getString("mobileFacebookShareLink");
+                            twitterShareLink = shareLinksJSON.getString("mobileTwitterShareLink");
+                        } catch (JSONException e) {
+                            // Show an alert describing the error
+                            showRegistrationErrorAlert("Registration error.\nPlease try again.");
+                            return;
+                        }
+
+                        HashMap<String, String> shareLinks = new HashMap<String, String>();
+                        shareLinks.put("shareLink", shareLink);
+                        shareLinks.put("facebook", facebookShareLink);
+                        shareLinks.put("twitter", twitterShareLink);
+
+                        // Set share links
+                        mUser.shareLinks = shareLinks;
+
                         // Validate the referral code
-                        Saasquatch.validateReferralCode(mTenant, referralCodeValue, mUser.secret,
-                                new Saasquatch.FetchContextCompleteListener() {
+                        Saasquatch.validateReferralCode(mTenant, referralCodeValue, mUser.secret, SignupActivity.this,
+                                new Saasquatch.FetchTaskCompleteListener() {
                                     @Override
                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -117,9 +164,12 @@ public class SignupActivity extends Activity {
                                         // Give the user a reward for signing up with referralCode
                                         mUser.addReward(code, rewardString);
 
+                                        // Apply the reward to their account
+                                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.secret, SignupActivity.this);
+
                                         // Lookup the person that referred user
-                                        Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.secret,
-                                                new Saasquatch.FetchContextCompleteListener() {
+                                        Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.secret, SignupActivity.this,
+                                                new Saasquatch.FetchTaskCompleteListener() {
                                                     @Override
                                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -207,11 +257,11 @@ public class SignupActivity extends Activity {
         Random rand = new Random();
         String userId = String.valueOf(rand.nextInt());
         String accountId = String.valueOf(rand.nextInt());
-        String locale = "en_us";
+        String locale = "en_US";
         String referralCode = firstName.toUpperCase() + lastName.toUpperCase();
         String secret = UUID.randomUUID().toString().replaceAll("-", "");
 
-        mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode);
+        mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode, null);
 
         JSONObject result = new JSONObject();
         try {
@@ -223,7 +273,7 @@ public class SignupActivity extends Activity {
             result.put("lastName", lastName);
             result.put("locale", locale);
             result.put("referralCode", referralCode);
-            result.put("imageURL", "");
+            result.put("imageUrl", "");
         } catch (JSONException e) {
             showRegistrationErrorAlert(null);
         }
@@ -244,7 +294,7 @@ public class SignupActivity extends Activity {
                 .show();
     }
 
-    private void showReferralDialog(String firstName, String lastName) {
+    private void showReferralDialog(String firstName, String lastInitial) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View dialogView = layoutInflater.inflate(R.layout.referral_dialog, null);
@@ -260,7 +310,7 @@ public class SignupActivity extends Activity {
 
         TextView referred = (TextView) dialogView.findViewById(R.id.reward_textview_referred);
         TextView rewardString = (TextView) dialogView.findViewById(R.id.reward_textview_rewardstring);
-        String referredString = "You've been referred by\n" + firstName + " " + lastName;
+        String referredString = "You've been referred by\n" + firstName + " " + lastInitial;
         referred.setText(referredString);
         rewardString.setText(mUser.rewards.peekFirst().reward);
 

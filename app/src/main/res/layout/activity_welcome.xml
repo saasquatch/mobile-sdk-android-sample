@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight=".5" />
+        android:layout_weight="0.5" />
 
     <TextView
         android:layout_width="match_parent"
@@ -31,20 +31,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your rewards:"
-        android:id="@+id/welcome_textview_rewardlabel"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:gravity="bottom"
-        android:textSize="17sp"
-        android:textColor="#555555"
-        android:layout_weight="0"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -58,12 +44,112 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10% off your SaaS"
+            android:text="Give 10% off and Get 10% off your SaaS!"
             android:id="@+id/welcome_textview_reward"
             android:layout_gravity="center_horizontal"
             android:textColor="#094f90"
             android:textIsSelectable="false"
-            android:textSize="17sp" />
+            android:textSize="25dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share 10% off SaaS and receive 10% off your next SaaS when they pay their first bill."
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:layout_weight="0"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share the link below or user code:"
+            android:id="@+id/textView2"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:layout_weight="0"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REFERRALCODE"
+            android:id="@+id/welcome_textview_referralcode"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:layout_weight="0"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHARE WITH:"
+            android:id="@+id/textView4"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:layout_weight="0"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+
+            <ImageButton
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:id="@+id/welcome_button_facebook"
+                android:src="@mipmap/facebook"
+                android:onClick="shareFacebook"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <ImageButton
+                android:layout_width="69dp"
+                android:layout_height="56dp"
+                android:id="@+id/welcome_button_twitter"
+                android:src="@mipmap/tweet"
+                android:layout_marginLeft="24dp"
+                android:onClick="shareTwitter"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -71,5 +157,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight=".5" />
+        android:layout_weight="0.5" />
 </LinearLayout>

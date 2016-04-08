@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="REWARD:"
+        android:text="YOU JUST GOT:"
         android:id="@+id/reward_textview_reward"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"

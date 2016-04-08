@@ -1,5 +1,6 @@
 package com.referralsaasquatch.sampleapp;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -15,6 +16,7 @@ public class User {
     public String email;
     public String referralCode;
     public LinkedList<Reward> rewards;
+    public HashMap<String, String> shareLinks;
 
     public static User getInstance() {
         return mInstance;
@@ -28,7 +30,8 @@ public class User {
                       String firstName,
                       String lastName,
                       String email,
-                      String referralCode) {
+                      String referralCode,
+                      HashMap<String, String> shareLinks) {
         this.secret = secret;
         this.userId = id;
         this.accountId = accountId;
@@ -36,6 +39,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.referralCode = referralCode;
+        this.shareLinks = shareLinks;
         rewards = new LinkedList<>();
     }
 

@@ -1,3 +1,7 @@
+/*
+Cloud icon by https://www.iconfinder.com/aha-soft is licensed under http://creativecommons.org/licenses/by/3.0/
+ */
+
 package com.referralsaasquatch.sampleapp;
 
 import android.app.Activity;
@@ -11,6 +15,8 @@ import com.wholepunk.saasquatch.Saasquatch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class LoginActivity extends Activity {
 
@@ -28,16 +34,16 @@ public class LoginActivity extends Activity {
         String emailValue = emailField.getText().toString();
         String passwordValue = passwordField.getText().toString();
 
-        if (emailValue.equals("bob") && passwordValue.equals("bob")) {
+        if (emailValue.equals("email") && passwordValue.equals("password")) {
 
-            // Get Bob's info
-            final String userId = "876343";
-            final String accountId = "613611";
-            final String secret = "038tr0810t8h1028th108102085180";
+            // Get Claire's info
+            final String userId = "10001110101";
+            final String accountId = "10001110101";
+            final String secret = "978-0440212560";
 
-            // Lookup Bob with Referral SaaSquatch
-            Saasquatch.getUser(mTenant, userId, accountId, secret,
-                    new Saasquatch.FetchContextCompleteListener() {
+            // Lookup Claire with Referral SaaSquatch
+            Saasquatch.getUser(mTenant, userId, accountId, secret, this,
+                    new Saasquatch.FetchTaskCompleteListener() {
                         @Override
                         public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -51,26 +57,48 @@ public class LoginActivity extends Activity {
                                 return;
                             }
 
-                            // Parse the returned context
+                            // Parse the returned data
                             String email;
                             String firstName;
                             String lastName;
                             String referralCode;
+                            String shareLink;
+                            String facebookShareLink;
+                            String twitterShareLink;
+                            JSONObject shareLinksJSON;
+
                             try {
                                 email = userInfo.getString("email");
                                 firstName = userInfo.getString("firstName");
                                 lastName = userInfo.getString("lastName");
                                 referralCode = userInfo.getString("referralCode");
+                                shareLinksJSON = userInfo.getJSONObject("shareLinks");
                             } catch (JSONException e) {
                                 // Show an alert describing the error
+                                showRegistrationErrorAlert("Login error.\nPlease try again.");
                                 return;
                             }
 
-                            // Login Bob
-                            mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode);
+                            try {
+                                shareLink = shareLinksJSON.getString("shareLink");
+                                facebookShareLink = shareLinksJSON.getString("mobileFacebookShareLink");
+                                twitterShareLink = shareLinksJSON.getString("mobileTwitterShareLink");
+                            } catch (JSONException e) {
+                                // Show an alert describing the error
+                                showRegistrationErrorAlert("Login error.\nPlease try again.");
+                                return;
+                            }
 
-                            // Validate Bob's referral code and give him his reward
-                            Saasquatch.validateReferralCode(mTenant, referralCode, secret, new Saasquatch.FetchContextCompleteListener() {
+                            HashMap<String, String> shareLinks = new HashMap<String, String>();
+                            shareLinks.put("shareLink", shareLink);
+                            shareLinks.put("facebook", facebookShareLink);
+                            shareLinks.put("twitter", twitterShareLink);
+
+                            // Login Claire
+                            mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode, shareLinks);
+
+                            // Validate Claire's referral code and give her reward to her
+                            Saasquatch.validateReferralCode(mTenant, referralCode, secret, LoginActivity.this, new Saasquatch.FetchTaskCompleteListener() {
                                 @Override
                                 public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -121,7 +149,7 @@ public class LoginActivity extends Activity {
                                         return;
                                     }
 
-                                    // Give Bob his referral reward
+                                    // Give Claire her referral reward
                                     mUser.addReward(code, rewardString);
 
                                     // Head to welcome screen
