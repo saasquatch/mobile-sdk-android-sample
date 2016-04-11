@@ -151,7 +151,7 @@ public class SignupActivity extends Activity {
 
                                                 if (type.equals("FEATURE")) {
                                                     rewardString = "You get a " + unit;
-                                                } else { // type == "TIME_CREDIT or type == "CREDIT"
+                                                } else { // type is "TIME_CREDIT or "CREDIT"
                                                     Integer credit = reward.getInt("credit");
                                                     rewardString = credit.toString() + " " + unit + " off your next SaaS";
                                                 }

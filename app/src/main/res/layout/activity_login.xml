@@ -65,7 +65,7 @@
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
         android:inputType="textEmailAddress"
-        android:hint="email@example.com"
+        android:hint="email"
         android:gravity="bottom"
         android:layout_weight="0" />
 
