@@ -19,7 +19,6 @@ import com.wholepunk.saasquatch.Saasquatch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Random;

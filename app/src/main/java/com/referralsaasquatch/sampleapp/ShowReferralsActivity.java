@@ -1,7 +1,9 @@
 package com.referralsaasquatch.sampleapp;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
+import android.app.Activity;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.wholepunk.saasquatch.Saasquatch;
@@ -10,16 +12,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ShowReferralsActivity extends Activity {
+public class ShowReferralsActivity extends ListActivity {
 
     private User mUser = User.getInstance();
     private String mTenant = "acunqvcfij2l4";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_referrals);
-
-        final TextView textView = (TextView) findViewById(R.id.showreferrals_textview_textview);
 
         Saasquatch.listReferralsForTenant(mTenant, mUser.secret, mUser.accountId, mUser.userId, null, null, null, null, null, null, this,
                 new Saasquatch.TaskCompleteListener() {
@@ -29,24 +28,23 @@ public class ShowReferralsActivity extends Activity {
                                            Integer errorCode) {
 
                         if (errorCode != null) {
-                            textView.setText(errorMessage);
                             return;
                         }
 
                         JSONArray referrals;
-                        String referralsString = "";
 
                         try {
                             referrals = userInfo.getJSONArray("referrals");
                         } catch (JSONException e) {
-                            textView.setText(e.getLocalizedMessage());
                             return;
                         }
 
                         String firstName;
                         Integer discountPercent;
+                        String[] referralsList = new String[referrals.length()];
 
                         for (int i = 0; i < referrals.length(); i++) {
+                            String referralsString;
                             try {
                                 JSONObject referredUser = referrals.getJSONObject(i).getJSONObject("referredUser");
                                 firstName = referredUser.getString("firstName");
@@ -56,11 +54,16 @@ public class ShowReferralsActivity extends Activity {
                                 break;
                             }
 
-                            referralsString += "\nYou gave " + firstName + " " + discountPercent.toString() + "% off their SaaS";
+                            referralsString = "\nYou gave " + firstName + " " + discountPercent.toString() + "% off their SaaS";
+                            referralsList[i] = referralsString;
                         }
 
-                        textView.setText(referralsString);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShowReferralsActivity.this, android.R.layout.simple_list_item_1, referralsList);
+                        setListAdapter(adapter);
+
                     }
                 });
     }
+
+
 }

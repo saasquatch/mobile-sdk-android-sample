@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SampleApp</string>
     <string name="facebook_app_id">1538421003119022</string>
+    <string name="title_activity_show_referrals">ShowReferralsActivity</string>
 </resources>
