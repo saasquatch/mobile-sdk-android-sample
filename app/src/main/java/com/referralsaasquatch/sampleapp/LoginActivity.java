@@ -43,7 +43,7 @@ public class LoginActivity extends Activity {
 
             // Lookup Claire with Referral SaaSquatch
             Saasquatch.getUser(mTenant, userId, accountId, secret, this,
-                    new Saasquatch.FetchTaskCompleteListener() {
+                    new Saasquatch.TaskCompleteListener() {
                         @Override
                         public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -97,66 +97,9 @@ public class LoginActivity extends Activity {
                             // Login Claire
                             mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode, shareLinks);
 
-                            // Validate Claire's referral code and give her reward to her
-                            Saasquatch.validateReferralCode(mTenant, referralCode, secret, LoginActivity.this, new Saasquatch.FetchTaskCompleteListener() {
-                                @Override
-                                public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
-
-                                    if (errorCode != null) {
-                                        if (errorCode.equals(401)) {
-                                            // The secret was not the same as registered
-                                            showRegistrationErrorAlert(errorMessage);
-                                        } else if (errorCode.equals(404)) {
-                                            // The referral code was not found
-                                            showRegistrationErrorAlert("Invalid referral code.\nPlease check your code and try again.");
-                                        } else {
-                                            showRegistrationErrorAlert(null);
-                                        }
-                                        return;
-                                    }
-
-                                    // Parse the returned info
-                                    String code;
-                                    String rewardString = "";
-                                    String type;
-                                    JSONObject reward;
-                                    try {
-                                        code = userInfo.getString("code");
-                                        reward = userInfo.getJSONObject("reward");
-                                        type = reward.getString("type");
-                                    } catch (JSONException e) {
-                                        showRegistrationErrorAlert("Something went wrong with your referral code.");
-                                        return;
-                                    }
-
-                                    // Parse the reward info
-                                    try {
-                                        if (type.equals("PCT_DISCOUNT")) {
-                                            Integer percent = reward.getInt("discountPercent");
-                                            rewardString = percent.toString() + "% off your next SaaS";
-                                        } else {
-                                            String unit = reward.getString("unit");
-
-                                            if (type.equals("FEATURE")) {
-                                                rewardString = "You get a " + unit;
-                                            } else { // type == "TIME_CREDIT or type == "CREDIT"
-                                                Integer credit = reward.getInt("credit");
-                                                rewardString = credit.toString() + " " + unit + " off your next SaaS";
-                                            }
-                                        }
-                                    } catch (JSONException e) {
-                                        showRegistrationErrorAlert("Something went wrong with your referral code.");
-                                        return;
-                                    }
-
-                                    // Give Claire her referral reward
-                                    mUser.addReward(code, rewardString);
-
-                                    // Head to welcome screen
-                                    Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
+                            // Head to welcome screen
+                            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                            startActivity(intent);
                         }
                     });
         } else {

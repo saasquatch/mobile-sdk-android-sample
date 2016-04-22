@@ -155,8 +155,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/signup_textfield_referralcode"
         android:hint="BOBTESTERSON"
-        android:gravity="center"
+        android:gravity="left"
         android:singleLine="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="referralcode reward"
+        android:id="@+id/signup_textview_rewardlabel"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".25"
+        android:textColor="#38B7B4" />
 
     <Space
         android:layout_width="match_parent"

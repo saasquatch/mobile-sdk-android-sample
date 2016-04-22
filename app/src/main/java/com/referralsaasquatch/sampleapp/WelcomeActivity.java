@@ -72,4 +72,9 @@ public class WelcomeActivity extends Activity {
             }
         }
     }
+
+    public void show(View showButton) {
+        Intent intent = new Intent(WelcomeActivity.this, ShowReferralsActivity.class);
+        startActivity(intent);
+    }
 }

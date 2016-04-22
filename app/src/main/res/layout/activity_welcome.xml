@@ -153,6 +153,23 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show my referrals"
+        android:id="@+id/welcomeview_button_show"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="#0e6eb0"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:layout_weight="0.5"
+        android:onClick="show"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

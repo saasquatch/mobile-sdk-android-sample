@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.wholepunk.saasquatch.Saasquatch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -39,10 +42,74 @@ public class SignupActivity extends Activity {
                 referralCode = uri.getQueryParameter("referralCode");
             }
         }
+        final EditText referralCodeField = (EditText) findViewById(R.id.signup_textfield_referralcode);
         if (referralCode != null) {
-            EditText referralCodeField = (EditText) findViewById(R.id.signup_textfield_referralcode);
             referralCodeField.setText(referralCode, TextView.BufferType.EDITABLE);
         }
+
+        final TextView rewardView = (TextView) findViewById(R.id.signup_textview_rewardlabel);
+        rewardView.setVisibility(View.GONE);
+        referralCodeField.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.checkbox_off_background, 0);
+
+        // Set up a listener to check the referral code as it is entered
+        referralCodeField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                Saasquatch.lookupReferralCode(mTenant, s.toString(), mUser.secret, SignupActivity.this,
+                        new Saasquatch.TaskCompleteListener() {
+                            @Override
+                            public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
+
+                                if (errorCode != null) {
+                                    return;
+                                }
+
+                                // Parse the returned info
+                                String code;
+                                String rewardString = "";
+                                String type;
+                                JSONObject reward;
+                                try {
+                                    code = userInfo.getString("code");
+                                    reward = userInfo.getJSONObject("reward");
+                                    type = reward.getString("type");
+                                } catch (JSONException e) {
+                                    return;
+                                }
+
+                                // Parse the reward info
+                                try {
+                                    if (type.equals("PCT_DISCOUNT")) {
+                                        Integer percent = reward.getInt("discountPercent");
+                                        rewardString = percent.toString() + "% off your next SaaS";
+                                    } else {
+                                        String unit = reward.getString("unit");
+
+                                        if (type.equals("FEATURE")) {
+                                            rewardString = "You get a " + unit;
+                                        } else { // type is "TIME_CREDIT or "CREDIT"
+                                            Integer credit = reward.getInt("credit");
+                                            rewardString = credit.toString() + " " + unit + " off your next SaaS";
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    return;
+                                }
+
+                                rewardView.setVisibility(View.VISIBLE);
+                                rewardView.setText(rewardString);
+                                referralCodeField.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.checkbox_on_background, 0);
+                            }
+                        });
+            }
+        });
     }
 
     public void signup(View signupButton) {
@@ -65,7 +132,7 @@ public class SignupActivity extends Activity {
 
         // Register the user with Referral SaaSquatch
         Saasquatch.registerUser(mTenant, mUser.userId, mUser.accountId, userInfo,
-                new Saasquatch.RegisterUserCompleteListener() {
+                new Saasquatch.TaskCompleteListener() {
                     @Override
                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -107,9 +174,9 @@ public class SignupActivity extends Activity {
                         // Set share links
                         mUser.shareLinks = shareLinks;
 
-                        // Validate the referral code
-                        Saasquatch.validateReferralCode(mTenant, referralCodeValue, mUser.secret, SignupActivity.this,
-                                new Saasquatch.FetchTaskCompleteListener() {
+                        // Apply the referral code
+                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.secret, SignupActivity.this,
+                                new Saasquatch.TaskCompleteListener() {
                                     @Override
                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -160,16 +227,11 @@ public class SignupActivity extends Activity {
                                             showRegistrationErrorAlert("Something went wrong with your referral code.");
                                             return;
                                         }
-
-                                        // Give the user a reward for signing up with referralCode
-                                        mUser.addReward(code, rewardString);
-
-                                        // Apply the reward to their account
-                                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.secret, SignupActivity.this);
+                                        final String rewardStr = rewardString;
 
                                         // Lookup the person that referred user
                                         Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.secret, SignupActivity.this,
-                                                new Saasquatch.FetchTaskCompleteListener() {
+                                                new Saasquatch.TaskCompleteListener() {
                                                     @Override
                                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
@@ -198,7 +260,7 @@ public class SignupActivity extends Activity {
                                                             return;
                                                         }
 
-                                                        showReferralDialog(referrerFirstName, referrerLastInitial);
+                                                        showReferralDialog(referrerFirstName, referrerLastInitial, rewardStr);
                                                     }
                                                 });
                                     }
@@ -294,7 +356,7 @@ public class SignupActivity extends Activity {
                 .show();
     }
 
-    private void showReferralDialog(String firstName, String lastInitial) {
+    private void showReferralDialog(String firstName, String lastInitial, String reward) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater = this.getLayoutInflater();
         View dialogView = layoutInflater.inflate(R.layout.referral_dialog, null);
@@ -312,7 +374,7 @@ public class SignupActivity extends Activity {
         TextView rewardString = (TextView) dialogView.findViewById(R.id.reward_textview_rewardstring);
         String referredString = "You've been referred by\n" + firstName + " " + lastInitial;
         referred.setText(referredString);
-        rewardString.setText(mUser.rewards.peekFirst().reward);
+        rewardString.setText(reward);
 
         dialog.show();
     }
