@@ -349,4 +349,4 @@ For a working demo implementation, check out our [Sample App](https://github.com
 
 For a detailed description of the `Saasquatch` class and it's public methods, please visit the [API Docs](http://docs.referralsaasquatch.com/mobile/android/docs/ "API level docs").
 
-For a reference of the fields available in `userInfo` please visit the [SaaSquathc docs](http://docs.referralsaasquatch.com/api/methods/ "Referral SaaSquatch REST API docs").
+For a reference of the fields available in `userInfo` please visit the [Referral SaaSquatch REST API docs](http://docs.referralsaasquatch.com/api/methods/ "Referral SaaSquatch REST API docs").
