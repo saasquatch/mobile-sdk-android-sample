@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class User {
     private static User mInstance = new User();
-    public String secret;
+    public String token;
     public String userId;
     public String accountId;
     public String firstName;
@@ -22,7 +22,7 @@ public class User {
 
     private User() {}
 
-    public void login(String secret,
+    public void login(String token,
                       String id,
                       String accountId,
                       String firstName,
@@ -30,7 +30,7 @@ public class User {
                       String email,
                       String referralCode,
                       HashMap<String, String> shareLinks) {
-        this.secret = secret;
+        this.token = token;
         this.userId = id;
         this.accountId = accountId;
         this.firstName = firstName;

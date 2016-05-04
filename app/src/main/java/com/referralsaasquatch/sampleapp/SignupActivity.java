@@ -16,11 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.wholepunk.saasquatch.Saasquatch;
+import com.auth0.jwt.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -61,7 +63,7 @@ public class SignupActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                Saasquatch.lookupReferralCode(mTenant, s.toString(), mUser.secret, SignupActivity.this,
+                Saasquatch.lookupReferralCode(mTenant, s.toString(), mUser.token, SignupActivity.this,
                         new Saasquatch.TaskCompleteListener() {
                             @Override
                             public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -130,7 +132,7 @@ public class SignupActivity extends Activity {
         JSONObject userInfo = createUser(firstNameValue, lastNameValue, emailValue);
 
         // Register the user with Referral SaaSquatch
-        Saasquatch.registerUser(mTenant, mUser.userId, mUser.accountId, userInfo,
+        Saasquatch.registerUser(mTenant, mUser.userId, mUser.accountId, mUser.token, userInfo, this,
                 new Saasquatch.TaskCompleteListener() {
                     @Override
                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -174,14 +176,14 @@ public class SignupActivity extends Activity {
                         mUser.shareLinks = shareLinks;
 
                         // Apply the referral code
-                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.secret, SignupActivity.this,
+                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.token, SignupActivity.this,
                                 new Saasquatch.TaskCompleteListener() {
                                     @Override
                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
                                         if (errorCode != null) {
                                             if (errorCode.equals(401)) {
-                                                // The secret was not the same as registered
+                                                // The token was not the same as registered
                                                 showRegistrationErrorAlert(errorMessage);
                                             } else if (errorCode.equals(404)) {
                                                 // The referral code was not found
@@ -229,14 +231,14 @@ public class SignupActivity extends Activity {
                                         final String rewardStr = rewardString;
 
                                         // Lookup the person that referred user
-                                        Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.secret, SignupActivity.this,
+                                        Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.token, SignupActivity.this,
                                                 new Saasquatch.TaskCompleteListener() {
                                                     @Override
                                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
 
                                                         if (errorCode != null) {
                                                             if (errorCode.equals(401)) {
-                                                                // The secret was not the same as registered
+                                                                // The token was not the same as registered
                                                                 showRegistrationErrorAlert(errorMessage);
                                                             } else if (errorCode.equals(404)) {
                                                                 // The user associated with the referral code was not found
@@ -320,13 +322,18 @@ public class SignupActivity extends Activity {
         String accountId = String.valueOf(rand.nextInt());
         String locale = "en_US";
         String referralCode = firstName.toUpperCase() + lastName.toUpperCase();
-        String secret = UUID.randomUUID().toString().replaceAll("-", "");
 
-        mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode, null);
+        JWTSigner signer = new JWTSigner("LIVE_WxIp37Pbgmt9jnxDmZvVIOf13OLg0k9F");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", accountId + "_" + userId);
+        JWTSigner.Options options = new JWTSigner.Options();
+        options.setAlgorithm(Algorithm.HS256);
+        String token = signer.sign(claims, options);
+
+        mUser.login(token, userId, accountId, firstName, lastName, email, referralCode, null);
 
         JSONObject result = new JSONObject();
         try {
-            result.put("secret", secret);
             result.put("id", userId);
             result.put("accountId", accountId);
             result.put("email", email);

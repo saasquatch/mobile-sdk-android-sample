@@ -15,9 +15,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url 'https://github.com/saasquatch/mobile-sdk-android-maven/raw/master/'
-        }
     }
 }
 

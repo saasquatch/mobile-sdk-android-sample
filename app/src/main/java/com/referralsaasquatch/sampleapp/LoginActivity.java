@@ -39,10 +39,10 @@ public class LoginActivity extends Activity {
             // Get Claire's info
             final String userId = "10001110101";
             final String accountId = "10001110101";
-            final String secret = "978-0440212560";
+            final String token = "978-0440212560";
 
             // Lookup Claire with Referral SaaSquatch
-            Saasquatch.getUser(mTenant, userId, accountId, secret, this,
+            Saasquatch.getUser(mTenant, userId, accountId, token, this,
                     new Saasquatch.TaskCompleteListener() {
                         @Override
                         public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
                             shareLinks.put("twitter", twitterShareLink);
 
                             // Login Claire
-                            mUser.login(secret, userId, accountId, firstName, lastName, email, referralCode, shareLinks);
+                            mUser.login(token, userId, accountId, firstName, lastName, email, referralCode, shareLinks);
 
                             // Head to welcome screen
                             Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);

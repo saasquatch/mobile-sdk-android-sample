@@ -4,8 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/saasquatch-release/saasquatch-release.iml" filepath="$PROJECT_DIR$/saasquatch-release/saasquatch-release.iml" />
-      <module fileurl="file://$PROJECT_DIR$/saasquatch-release/saasquatch-release.iml" filepath="$PROJECT_DIR$/saasquatch-release/saasquatch-release.iml" />
+      <module fileurl="file://$PROJECT_DIR$/saasquatch/saasquatch.iml" filepath="$PROJECT_DIR$/saasquatch/saasquatch.iml" />
     </modules>
   </component>
 </project>

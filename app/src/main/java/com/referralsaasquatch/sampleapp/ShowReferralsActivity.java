@@ -20,7 +20,7 @@ public class ShowReferralsActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Saasquatch.listReferralsForTenant(mTenant, mUser.secret, mUser.accountId, mUser.userId, null, null, null, null, null, null, this,
+        Saasquatch.listReferralsForTenant(mTenant, mUser.token, mUser.accountId, mUser.userId, null, null, null, null, null, null, this,
                 new Saasquatch.TaskCompleteListener() {
                     @Override
                     public void onComplete(JSONObject userInfo,
