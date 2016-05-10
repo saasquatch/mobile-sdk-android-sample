@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -323,15 +324,6 @@ public class SignupActivity extends Activity {
         String locale = "en_US";
         String referralCode = firstName.toUpperCase() + lastName.toUpperCase();
 
-        JWTSigner signer = new JWTSigner("LIVE_WxIp37Pbgmt9jnxDmZvVIOf13OLg0k9F");
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", accountId + "_" + userId);
-        JWTSigner.Options options = new JWTSigner.Options();
-        options.setAlgorithm(Algorithm.HS256);
-        String token = signer.sign(claims, options);
-
-        mUser.login(token, userId, accountId, firstName, lastName, email, referralCode, null);
-
         JSONObject result = new JSONObject();
         try {
             result.put("id", userId);
@@ -345,6 +337,27 @@ public class SignupActivity extends Activity {
         } catch (JSONException e) {
             showRegistrationErrorAlert(null);
         }
+
+        HashMap<String, Object> userInfo = new HashMap<>();
+        userInfo.put("id", userId);
+        userInfo.put("accountId", accountId);
+        userInfo.put("email", email);
+        userInfo.put("firstName", firstName);
+        userInfo.put("lastName", lastName);
+        userInfo.put("locale", locale);
+        userInfo.put("referralCode", referralCode);
+        userInfo.put("imageUrl", "");
+
+        JWTSigner signer = new JWTSigner("LIVE_WxIp37Pbgmt9jnxDmZvVIOf13OLg0k9F");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", accountId + "_" + userId);
+        claims.put("user", userInfo);
+        JWTSigner.Options options = new JWTSigner.Options();
+        options.setAlgorithm(Algorithm.HS256);
+        String token = signer.sign(claims, options);
+
+        mUser.login(token, userId, accountId, firstName, lastName, email, referralCode, null);
+        Log.w("TOKEN", token);
 
         return result;
     }
