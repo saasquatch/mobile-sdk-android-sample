@@ -15,12 +15,12 @@ import org.json.JSONObject;
 public class ShowReferralsActivity extends ListActivity {
 
     private User mUser = User.getInstance();
-    private String mTenant = "acunqvcfij2l4";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Saasquatch.listReferralsForTenant(mTenant, mUser.token, mUser.accountId, mUser.userId, null, null, null, null, null, null, this,
+        Saasquatch.listReferralsForTenant(mUser.tenant, mUser.token, mUser.accountId, mUser.userId, null, null, null, null, null, null, this,
                 new Saasquatch.TaskCompleteListener() {
                     @Override
                     public void onComplete(JSONObject userInfo,

@@ -1,1 +1,1 @@
-include ':app', ':saasquatch'
+include ':app'

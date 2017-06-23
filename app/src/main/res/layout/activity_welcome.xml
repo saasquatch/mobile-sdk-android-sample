@@ -4,18 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingBottom="2dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.referralsaasquatch.sampleapp.WelcomeActivity"
-    android:background="#f8f8f8">
+    android:background="#f8f8f8"
+    android:weightSum="1">
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.00" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,98 +27,96 @@
         android:textColor="#094f90"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_weight="0"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="341dp"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
         android:background="@android:drawable/dialog_holo_light_frame"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
 
         <TextView
+            android:id="@+id/welcome_textview_reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Give 10% off and Get 10% off your SaaS!"
-            android:id="@+id/welcome_textview_reward"
             android:layout_gravity="center_horizontal"
-            android:textColor="#094f90"
-            android:textIsSelectable="false"
-            android:textSize="25dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="Give 10% off and Get 10% off your SaaS!"
+            android:textColor="#094f90"
+            android:textIsSelectable="false"
+            android:textSize="25dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share 10% off SaaS and receive 10% off your next SaaS when they pay their first bill."
             android:id="@+id/textView"
-            android:textAlignment="center"
-            android:gravity="bottom"
-            android:textSize="17sp"
-            android:textColor="#555555"
-            android:layout_weight="0"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Share the link below or user code:"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:text="Share 10% off SaaS and receive 10% off your next SaaS when they pay their first bill."
+            android:textAlignment="center"
+            android:textColor="#555555"
+            android:textSize="17sp" />
+
+        <TextView
             android:id="@+id/textView2"
-            android:textAlignment="center"
-            android:gravity="bottom"
-            android:textSize="17sp"
-            android:textColor="#555555"
-            android:layout_weight="0"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REFERRALCODE"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:text="Share the link below or user code:"
+            android:textAlignment="center"
+            android:textColor="#555555"
+            android:textSize="17sp" />
+
+        <TextView
             android:id="@+id/welcome_textview_referralcode"
-            android:textAlignment="center"
-            android:gravity="bottom"
-            android:textSize="17sp"
-            android:textColor="#555555"
-            android:layout_weight="0"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:textStyle="bold"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SHARE WITH:"
-            android:id="@+id/textView4"
-            android:textAlignment="center"
-            android:gravity="bottom"
-            android:textSize="17sp"
-            android:textColor="#555555"
-            android:layout_weight="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:text="REFERRALCODE"
+            android:textAlignment="center"
+            android:textColor="#555555"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:text="SHARE WITH:"
+            android:textAlignment="center"
+            android:textColor="#555555"
+            android:textSize="17sp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <Space
                 android:layout_width="wrap_content"
@@ -125,25 +124,25 @@
                 android:layout_weight="0.5" />
 
             <ImageButton
-                android:layout_width="56dp"
-                android:layout_height="56dp"
                 android:id="@+id/welcome_button_facebook"
-                android:src="@mipmap/facebook"
-                android:onClick="shareFacebook"
-                android:background="@android:color/transparent"
+                android:layout_width="56dp"
+                android:layout_height="55dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
+                android:background="@android:color/transparent"
+                android:onClick="shareFacebook"
+                android:src="@mipmap/facebook" />
 
             <ImageButton
-                android:layout_width="69dp"
-                android:layout_height="56dp"
                 android:id="@+id/welcome_button_twitter"
-                android:src="@mipmap/tweet"
+                android:layout_width="69dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="24dp"
-                android:onClick="shareTwitter"
-                android:background="@android:color/transparent"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
+                android:background="@android:color/transparent"
+                android:onClick="shareTwitter"
+                android:src="@mipmap/tweet" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -154,25 +153,56 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show my referrals"
-        android:id="@+id/welcomeview_button_show"
+        android:id="@+id/button3"
+        android:layout_width="151dp"
+        android:layout_height="37dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
+        android:onClick="setShareButton"
+        android:text="GET SHARE LINKS"
+        android:layout_weight="0.01" />
+
+    <Button
+        android:id="@+id/welcomeview_button_show"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="7dp"
         android:background="#0e6eb0"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textAllCaps="false"
-        android:layout_weight="0.5"
         android:onClick="show"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:text="Show my referrals"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="20dp">
+
+        <Button
+            android:id="@+id/edit_user"
+            android:layout_width="125dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:onClick="setEditButton"
+            android:text="Edit User"></Button>
+
+        <Button
+            android:id="@+id/CookieUser"
+            android:layout_width="151dp"
+            android:layout_height="36dp"
+            android:onClick="setCookieButton"
+            android:text="Cookie User"></Button>
+    </LinearLayout>
+
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.5" />
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

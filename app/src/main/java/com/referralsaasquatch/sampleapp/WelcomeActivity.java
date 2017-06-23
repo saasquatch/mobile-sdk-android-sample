@@ -36,6 +36,11 @@ public class WelcomeActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
+    /**
+     * This method creates a facebook share button
+     *
+     * @param shareButton button pressed for a facebook share button
+     */
     public void shareFacebook(View shareButton) {
         ShareLinkContent content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse(mUser.shareLinks.get("facebook")))
@@ -50,6 +55,11 @@ public class WelcomeActivity extends Activity {
         }
     }
 
+    /**
+     * This method creats a twitter share button
+     *
+     * @param shareButton button pressed for a twitter share button
+     */
     public void shareTwitter(View shareButton) {
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -75,6 +85,37 @@ public class WelcomeActivity extends Activity {
 
     public void show(View showButton) {
         Intent intent = new Intent(WelcomeActivity.this, ShowReferralsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This method directs to the page where a user can edit their info
+     *
+     * @param editButton The button pressed when the user wants to edit their info
+     */
+    public void setEditButton(View editButton) {
+        Intent intent = new Intent(WelcomeActivity.this, UpdateUserActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This method directs to the page where a cookie user can sign up
+     *
+     * @param editButton The button pressed when the user wants to set a cookie user
+     */
+    public void setCookieButton(View editButton) {
+        Intent intent = new Intent(WelcomeActivity.this, CookieRegisterActivity.class);
+        startActivity(intent);
+    }
+
+
+    /**
+     * This method directs to the page where a cookie user can sign up
+     *
+     * @param shareButton The button pressed when the user wants to set a cookie user
+     */
+    public void setShareButton(View shareButton) {
+        Intent intent = new Intent(WelcomeActivity.this, ShareLinksActivity.class);
         startActivity(intent);
     }
 }

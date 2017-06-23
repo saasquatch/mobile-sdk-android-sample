@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.referralsaasquatch.sampleapp">
+    package="com.referralsaasquatch.sampleapp" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -48,13 +48,25 @@
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
+            tools:replace="android:theme"
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ShowReferralsActivity"
-            android:label="@string/title_activity_show_referrals" />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UpdateUserActivity"
+            android:label="" />
+        <activity
+            android:name=".CookieRegisterActivity"
+            android:label="" >
+        </activity>
+        <activity android:exported="true"
+            android:name=".ShareLinksActivity"
+            android:label="" >
+        </activity>
     </application>
 
 </manifest>

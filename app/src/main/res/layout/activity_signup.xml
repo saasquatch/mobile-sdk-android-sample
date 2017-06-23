@@ -88,9 +88,9 @@
         android:layout_marginTop="10dp" />
 
     <EditText
+        android:id="@+id/signup_textfield_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/signup_textfield_email"
         android:hint="email@example.com"
         android:inputType="textEmailAddress" />
 
@@ -151,21 +151,22 @@
         android:layout_marginTop="10dp" />
 
     <EditText
+        android:id="@+id/signup_textfield_referralcode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/signup_textfield_referralcode"
-        android:hint="BOBTESTERSON"
         android:gravity="left"
-        android:singleLine="true" />
+        android:hint="BOBTESTERSON"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true" />
 
     <TextView
+        android:id="@+id/signup_textview_rewardlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="referralcode reward"
-        android:id="@+id/signup_textview_rewardlabel"
         android:layout_gravity="center_horizontal"
         android:layout_weight=".25"
+        android:text="referralcode reward"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#38B7B4" />
 
     <Space
@@ -175,19 +176,20 @@
         android:layout_weight=".25" />
 
     <Button
+        android:id="@+id/signup_button_signup"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Sign me up!"
-        android:id="@+id/signup_button_signup"
         android:layout_gravity="center_horizontal"
-        android:background="#0e6eb0"
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textAllCaps="false"
-        android:layout_weight="0"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:onClick="signup" />
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        android:background="#0e6eb0"
+        android:elevation="0dp"
+        android:onClick="signup"
+        android:text="Sign me up!"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
 
     <Space
         android:layout_width="match_parent"

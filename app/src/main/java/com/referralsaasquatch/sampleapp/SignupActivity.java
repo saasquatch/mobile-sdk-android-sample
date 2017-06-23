@@ -30,7 +30,7 @@ import java.util.UUID;
 public class SignupActivity extends Activity {
 
     private User mUser = User.getInstance();
-    private String mTenant = "acunqvcfij2l4";
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +64,7 @@ public class SignupActivity extends Activity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                Saasquatch.lookupReferralCode(mTenant, s.toString(), mUser.token, SignupActivity.this,
+                Saasquatch.lookupReferralCode(mUser.tenant, s.toString(), mUser.token, SignupActivity.this,
                         new Saasquatch.TaskCompleteListener() {
                             @Override
                             public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -114,6 +114,11 @@ public class SignupActivity extends Activity {
         });
     }
 
+    /**
+     * This method is used to collect the users data and sign them up for an account
+     *
+     * @param signupButton Button pressed when user has entered their info and wants to sign up
+     */
     public void signup(View signupButton) {
         EditText firstName = (EditText) findViewById(R.id.signup_textfield_firstname);
         EditText lastName = (EditText) findViewById(R.id.signup_textfield_lastname);
@@ -126,6 +131,8 @@ public class SignupActivity extends Activity {
         String passwordValue = password.getText().toString();
         final String referralCodeValue = referralCode.getText().toString();
 
+        Log.d("referralCodeValue", referralCodeValue);
+
         if (!validateFields()) {
             return;
         }
@@ -133,7 +140,7 @@ public class SignupActivity extends Activity {
         JSONObject userInfo = createUser(firstNameValue, lastNameValue, emailValue);
 
         // Register the user with Referral SaaSquatch
-        Saasquatch.registerUser(mTenant, mUser.userId, mUser.accountId, mUser.token, userInfo, this,
+        Saasquatch.registerUser(mUser.tenant, mUser.userId, mUser.accountId, mUser.token, userInfo, this,
                 new Saasquatch.TaskCompleteListener() {
                     @Override
                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -177,7 +184,7 @@ public class SignupActivity extends Activity {
                         mUser.shareLinks = shareLinks;
 
                         // Apply the referral code
-                        Saasquatch.applyReferralCode(mTenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.token, SignupActivity.this,
+                        Saasquatch.applyReferralCode(mUser.tenant, mUser.userId, mUser.accountId, referralCodeValue, mUser.token, SignupActivity.this,
                                 new Saasquatch.TaskCompleteListener() {
                                     @Override
                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -232,7 +239,7 @@ public class SignupActivity extends Activity {
                                         final String rewardStr = rewardString;
 
                                         // Lookup the person that referred user
-                                        Saasquatch.getUserByReferralCode(mTenant, referralCodeValue, mUser.token, SignupActivity.this,
+                                        Saasquatch.getUserByReferralCode(mUser.tenant, referralCodeValue, mUser.token, SignupActivity.this,
                                                 new Saasquatch.TaskCompleteListener() {
                                                     @Override
                                                     public void onComplete(JSONObject userInfo, String errorMessage, Integer errorCode) {
@@ -317,6 +324,14 @@ public class SignupActivity extends Activity {
         return result;
     }
 
+    /**
+     * This method is used to create a JSON object for the new user
+     *
+     * @param firstName The first name of the new sign up
+     * @param lastName The last name of the new sign up
+     * @param email The email of the new sign up
+     * @return A JSON object containing the users information
+     */
     private JSONObject createUser(String firstName, String lastName, String email) {
         Random rand = new Random();
         String userId = String.valueOf(rand.nextInt());
@@ -348,7 +363,9 @@ public class SignupActivity extends Activity {
         userInfo.put("referralCode", referralCode);
         userInfo.put("imageUrl", "");
 
-        JWTSigner signer = new JWTSigner("LIVE_WxIp37Pbgmt9jnxDmZvVIOf13OLg0k9F");
+
+        // NOTE: Add in your API Key
+        JWTSigner signer = new JWTSigner(mUser.token_raw);
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", accountId + "_" + userId);
         claims.put("user", userInfo);
@@ -356,11 +373,18 @@ public class SignupActivity extends Activity {
         options.setAlgorithm(Algorithm.HS256);
         String token = signer.sign(claims, options);
 
-        mUser.login(token, userId, accountId, firstName, lastName, email, referralCode, null);
-        Log.w("TOKEN", token);
+
+        // Uncomment to create with Anonymous User. You must also remove the token section above.
+        /*
+         String token = null;
+        */
+
+        mUser.login(token, mUser.token_raw,userId, accountId, firstName, lastName, email, referralCode, mUser.tenant, null);
+        //Log.w("TOKEN", token);
 
         return result;
     }
+
 
     private void showRegistrationErrorAlert(String message) {
         String errorMessage = "Something went wrong with your sign up\n" + "Please check your details and try again.";
